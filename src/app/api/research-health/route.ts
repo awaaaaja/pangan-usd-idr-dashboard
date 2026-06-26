@@ -49,8 +49,17 @@ export async function GET() {
       }
     });
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    // Strip any potential connection strings from the error message
+    const safeMessage = message.replace(/postgresql:\/\/[^@]+@[^/]+\/[^\s"']*/gi, '[REDACTED]');
+    console.error('[research-health] error:', safeMessage);
     return NextResponse.json(
-      { error: "Internal server error during health check" },
+      {
+        databaseConfigured: !!process.env.DATABASE_URL,
+        researchRunId: RESEARCH_RUN_ID,
+        runFound: false,
+        error: safeMessage,
+      },
       { status: 500 }
     );
   }
