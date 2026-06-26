@@ -4,10 +4,13 @@ import { RESEARCH_RUN_ID } from "@/services/research.service";
 
 export async function GET() {
   try {
-    const databaseConfigured = !!process.env.DATABASE_URL;
+    const dbUrl = process.env.DATABASE_URL || "";
+    const databaseConfigured = !!dbUrl;
+    const isSupabase = dbUrl.includes("supabase");
     if (!databaseConfigured) {
       return NextResponse.json({
         databaseConfigured: false,
+        isSupabase,
         researchRunId: RESEARCH_RUN_ID,
         runFound: false,
       });
@@ -55,7 +58,8 @@ export async function GET() {
     console.error('[research-health] error:', safeMessage);
     return NextResponse.json(
       {
-        databaseConfigured: !!process.env.DATABASE_URL,
+        databaseConfigured: !!dbUrl,
+        isSupabase,
         researchRunId: RESEARCH_RUN_ID,
         runFound: false,
         error: safeMessage,
