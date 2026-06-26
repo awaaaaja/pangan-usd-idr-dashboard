@@ -3,10 +3,11 @@ import { db } from "@/lib/db";
 import { RESEARCH_RUN_ID } from "@/services/research.service";
 
 export async function GET() {
+  const dbUrl = process.env.DATABASE_URL || "";
+  const databaseConfigured = !!dbUrl;
+  const isSupabase = dbUrl.includes("supabase");
+
   try {
-    const dbUrl = process.env.DATABASE_URL || "";
-    const databaseConfigured = !!dbUrl;
-    const isSupabase = dbUrl.includes("supabase");
     if (!databaseConfigured) {
       return NextResponse.json({
         databaseConfigured: false,
