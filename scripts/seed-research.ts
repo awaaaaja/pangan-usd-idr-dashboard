@@ -57,10 +57,20 @@ async function readCsv(filename: string): Promise<any[]> {
 }
 
 // Helper to save generic artifact rows
-async function saveArtifactAndRows(filename: string, artifactType: string, records: any[]) {
-  const artifactKey = filename.replace('.csv', '');
-  await prisma.researchArtifact.create({
-    data: {
+async function saveArtifactAndRows(filename: string, artifactKey: string, artifactType: string, records: any[]) {
+  await prisma.researchArtifact.upsert({
+    where: {
+      researchRunId_artifactKey_sourceFile: {
+        researchRunId: RESEARCH_RUN_ID,
+        artifactKey: artifactKey,
+        sourceFile: filename,
+      }
+    },
+    update: {
+      title: filename,
+      rowCount: records.length,
+    },
+    create: {
       researchRunId: RESEARCH_RUN_ID,
       artifactKey: artifactKey,
       artifactType: artifactType,
@@ -83,6 +93,12 @@ async function saveArtifactAndRows(filename: string, artifactType: string, recor
       }))
     });
   }
+}
+
+async function importGenericArtifact(filename: string, artifactKey: string) {
+  console.log(`Importing generic artifact: ${filename} -> ${artifactKey}`);
+  const records = await readCsv(filename);
+  await saveArtifactAndRows(filename, artifactKey, 'Generic', records);
 }
 
 async function main() {
@@ -131,10 +147,23 @@ async function main() {
     data: runMetadata
   });
 
+  // Import generic CSVs for the dashboard
+  await importGenericArtifact('01_audit_data_mentah.csv', 'audit_raw');
+  await importGenericArtifact('02_missing_value_raw_harga.csv', 'missing_raw_harga');
+  await importGenericArtifact('03_missing_value_raw_usd_idr.csv', 'missing_raw_usd_idr');
+  await importGenericArtifact('04_cakupan_raw_per_level_harga.csv', 'coverage_level');
+  await importGenericArtifact('05_ringkasan_pembersihan_panel.csv', 'cleaning');
+  await importGenericArtifact('06_cakupan_panel_bersih.csv', 'clean_coverage');
+  await importGenericArtifact('07_ringkasan_integrasi_usd_idr.csv', 'usd_integration');
+  await importGenericArtifact('08_audit_perlakuan_lag_hilang.csv', 'lag_audit');
+  await importGenericArtifact('11_registry_fitur.csv', 'feature_registry');
+  await importGenericArtifact('26_indeks_visualisasi_bab_iv.csv', 'figure_index');
+  await importGenericArtifact('27_indeks_tabel_bab_iv.csv', 'table_index');
+
   // 1. SplitRegistry
   console.log('Importing SplitRegistry...');
   const splitRecords = await readCsv('12_registry_split_temporal_embargo.csv');
-  await saveArtifactAndRows('12_registry_split_temporal_embargo.csv', 'Registry', splitRecords);
+  await saveArtifactAndRows('12_registry_split_temporal_embargo.csv', '12_registry_split_temporal_embargo', 'Registry', splitRecords);
   await prisma.splitRegistry.createMany({
     data: splitRecords.map((r, i) => ({
       researchRunId: RESEARCH_RUN_ID,
@@ -160,7 +189,7 @@ async function main() {
   // 2. ValidationMetric
   console.log('Importing ValidationMetric...');
   const valMetricsRecords = await readCsv('13_metrik_walk_forward_per_fold.csv');
-  await saveArtifactAndRows('13_metrik_walk_forward_per_fold.csv', 'Metric', valMetricsRecords);
+  await saveArtifactAndRows('13_metrik_walk_forward_per_fold.csv', '13_metrik_walk_forward_per_fold', 'Metric', valMetricsRecords);
   await prisma.validationMetric.createMany({
     data: valMetricsRecords.map((r, i) => ({
       researchRunId: RESEARCH_RUN_ID,
@@ -189,7 +218,7 @@ async function main() {
   const selectedConfigRecords = await readCsv('15_konfigurasi_terpilih_dari_validasi.csv');
   const selectedConfigs = new Set(selectedConfigRecords.map(r => String(r.experiment)));
   
-  await saveArtifactAndRows('14_leaderboard_walk_forward.csv', 'Leaderboard', valLeaderboardRecords);
+  await saveArtifactAndRows('14_leaderboard_walk_forward.csv', '14_leaderboard_walk_forward', 'Leaderboard', valLeaderboardRecords);
   await prisma.validationLeaderboard.createMany({
     data: valLeaderboardRecords.map((r, i) => ({
       researchRunId: RESEARCH_RUN_ID,
@@ -218,7 +247,7 @@ async function main() {
   const championTestRecords = await readCsv('17_metrik_test_akhir_champion_ml.csv');
   const championExperiments = new Set(championTestRecords.map(r => String(r.experiment)));
   
-  await saveArtifactAndRows('16_metrik_test_akhir.csv', 'Metric', testMetricsRecords);
+  await saveArtifactAndRows('16_metrik_test_akhir.csv', '16_metrik_test_akhir', 'Metric', testMetricsRecords);
   await prisma.testMetric.createMany({
     data: testMetricsRecords.map((r, i) => ({
       researchRunId: RESEARCH_RUN_ID,
@@ -245,7 +274,7 @@ async function main() {
   // 5. MetricsByPriceLevel
   console.log('Importing MetricsByPriceLevel...');
   const priceLevelRecords = await readCsv('18_metrik_test_per_level_harga.csv');
-  await saveArtifactAndRows('18_metrik_test_per_level_harga.csv', 'Metric', priceLevelRecords);
+  await saveArtifactAndRows('18_metrik_test_per_level_harga.csv', '18_metrik_test_per_level_harga', 'Metric', priceLevelRecords);
   await prisma.metricsByPriceLevel.createMany({
     data: priceLevelRecords.map((r, i) => ({
       researchRunId: RESEARCH_RUN_ID,
@@ -272,7 +301,7 @@ async function main() {
   // 6. MetricsByCommodity
   console.log('Importing MetricsByCommodity...');
   const commodityRecords = await readCsv('19_metrik_test_per_komoditas_champion.csv');
-  await saveArtifactAndRows('19_metrik_test_per_komoditas_champion.csv', 'Metric', commodityRecords);
+  await saveArtifactAndRows('19_metrik_test_per_komoditas_champion.csv', '19_metrik_test_per_komoditas_champion', 'Metric', commodityRecords);
   await prisma.metricsByCommodity.createMany({
     data: commodityRecords.map((r, i) => ({
       researchRunId: RESEARCH_RUN_ID,
@@ -299,7 +328,7 @@ async function main() {
   // 7. MetricsSumateraBarat
   console.log('Importing MetricsSumateraBarat...');
   const sumbarRecords = await readCsv('20_metrik_test_sumatera_barat.csv');
-  await saveArtifactAndRows('20_metrik_test_sumatera_barat.csv', 'Metric', sumbarRecords);
+  await saveArtifactAndRows('20_metrik_test_sumatera_barat.csv', '20_metrik_test_sumatera_barat', 'Metric', sumbarRecords);
   await prisma.metricsSumateraBarat.createMany({
     data: sumbarRecords.map((r, i) => ({
       researchRunId: RESEARCH_RUN_ID,
@@ -326,7 +355,7 @@ async function main() {
   // 8. UsdIdrAblationMetric
   console.log('Importing UsdIdrAblationMetric...');
   const ablationRecords = await readCsv('22_ablation_usd_idr_test_akhir.csv');
-  await saveArtifactAndRows('22_ablation_usd_idr_test_akhir.csv', 'Metric', ablationRecords);
+  await saveArtifactAndRows('22_ablation_usd_idr_test_akhir.csv', '22_ablation_usd_idr_test_akhir', 'Metric', ablationRecords);
   await prisma.usdIdrAblationMetric.createMany({
     data: ablationRecords.map((r, i) => ({
       researchRunId: RESEARCH_RUN_ID,
@@ -352,7 +381,7 @@ async function main() {
   // 9. OutlierSummary
   console.log('Importing OutlierSummary...');
   const outlierSummaryRecords = await readCsv('09_ringkasan_audit_outlier.csv');
-  await saveArtifactAndRows('09_ringkasan_audit_outlier.csv', 'Summary', outlierSummaryRecords);
+  await saveArtifactAndRows('09_ringkasan_audit_outlier.csv', '09_ringkasan_audit_outlier', 'Summary', outlierSummaryRecords);
   await prisma.outlierSummary.createMany({
     data: outlierSummaryRecords.map((r, i) => ({
       researchRunId: RESEARCH_RUN_ID,
@@ -367,7 +396,7 @@ async function main() {
   // 10. OutlierDetail
   console.log('Importing OutlierDetail...');
   const outlierDetailRecords = await readCsv('10_detail_outlier_audit.csv');
-  await saveArtifactAndRows('10_detail_outlier_audit.csv', 'Detail', outlierDetailRecords);
+  await saveArtifactAndRows('10_detail_outlier_audit.csv', '10_detail_outlier_audit', 'Detail', outlierDetailRecords);
   
   const chunkSize = 1000;
   for (let i = 0; i < outlierDetailRecords.length; i += chunkSize) {
@@ -401,7 +430,7 @@ async function main() {
   // 11. OutlierSensitivity
   console.log('Importing OutlierSensitivity...');
   const outlierSensitivityRecords = await readCsv('21_sensitivitas_outlier_test_akhir.csv');
-  await saveArtifactAndRows('21_sensitivitas_outlier_test_akhir.csv', 'Sensitivity', outlierSensitivityRecords);
+  await saveArtifactAndRows('21_sensitivitas_outlier_test_akhir.csv', '21_sensitivitas_outlier_test_akhir', 'Sensitivity', outlierSensitivityRecords);
   await prisma.outlierSensitivity.createMany({
     data: outlierSensitivityRecords.map((r, i) => ({
       researchRunId: RESEARCH_RUN_ID,
@@ -424,7 +453,7 @@ async function main() {
   // 12. ShapGlobalImportance
   console.log('Importing ShapGlobalImportance...');
   const shapGlobalRecords = await readCsv('23_shap_global_importance_champion.csv');
-  await saveArtifactAndRows('23_shap_global_importance_champion.csv', 'Importance', shapGlobalRecords);
+  await saveArtifactAndRows('23_shap_global_importance_champion.csv', '23_shap_global_importance_champion', 'Importance', shapGlobalRecords);
   await prisma.shapGlobalImportance.createMany({
     data: shapGlobalRecords.map((r, i) => ({
       researchRunId: RESEARCH_RUN_ID,
@@ -439,7 +468,7 @@ async function main() {
   // 13. ShapGroupImportance
   console.log('Importing ShapGroupImportance...');
   const shapGroupRecords = await readCsv('24_shap_importance_per_kelompok.csv');
-  await saveArtifactAndRows('24_shap_importance_per_kelompok.csv', 'Importance', shapGroupRecords);
+  await saveArtifactAndRows('24_shap_importance_per_kelompok.csv', '24_shap_importance_per_kelompok', 'Importance', shapGroupRecords);
   await prisma.shapGroupImportance.createMany({
     data: shapGroupRecords.map((r, i) => ({
       researchRunId: RESEARCH_RUN_ID,
@@ -453,7 +482,7 @@ async function main() {
   // 14. ShapLocalObservation
   console.log('Importing ShapLocalObservation...');
   const shapLocalRecords = await readCsv('25_observasi_shap_lokal.csv');
-  await saveArtifactAndRows('25_observasi_shap_lokal.csv', 'Observation', shapLocalRecords);
+  await saveArtifactAndRows('25_observasi_shap_lokal.csv', '25_observasi_shap_lokal', 'Observation', shapLocalRecords);
   
   for (let i = 0; i < shapLocalRecords.length; i += chunkSize) {
     const chunk = shapLocalRecords.slice(i, i + chunkSize);
