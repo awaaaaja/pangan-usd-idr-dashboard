@@ -1,3 +1,4 @@
+import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@/generated/prisma/client";
 
@@ -10,12 +11,12 @@ const connectionString =
   process.env.DATABASE_URL ??
   "postgresql://placeholder:placeholder@localhost:5432/placeholder";
 
+const pool = new Pool({ connectionString });
+
 export const db =
   globalThis.prisma ??
   new PrismaClient({
-    adapter: new PrismaPg({
-      connectionString,
-    }),
+    adapter: new PrismaPg(pool),
   });
 
 if (process.env.NODE_ENV !== "production") {
