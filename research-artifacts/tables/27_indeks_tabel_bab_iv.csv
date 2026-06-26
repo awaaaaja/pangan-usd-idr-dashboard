@@ -1,0 +1,17 @@
+file,isi,section_bab_iv
+01_audit_data_mentah.csv,Audit data mentah,4.1 Deskripsi Data
+05_ringkasan_pembersihan_panel.csv,Ringkasan pembersihan panel,4.1 Deskripsi Data
+08_audit_perlakuan_lag_hilang.csv,Audit perlakuan lag hilang,4.2 Metode Pengolahan
+09_ringkasan_audit_outlier.csv,Ringkasan flag outlier,4.2 Audit Kualitas Data
+10_detail_outlier_audit.csv,Detail outlier untuk verifikasi sumber,4.2 Audit Kualitas Data
+12_registry_split_temporal_embargo.csv,"Registry walk-forward, embargo, dan test akhir",4.3 Validasi Model
+14_leaderboard_walk_forward.csv,Leaderboard validasi walk-forward,4.3 Validasi Model
+15_konfigurasi_terpilih_dari_validasi.csv,Konfigurasi model terpilih,4.3 Validasi Model
+16_metrik_test_akhir.csv,Metrik test akhir seluruh model,4.4 Evaluasi Test Akhir
+18_metrik_test_per_level_harga.csv,Metrik per level harga,4.4 Evaluasi Test Akhir
+19_metrik_test_per_komoditas_champion.csv,Metrik per komoditas,4.4 Evaluasi Test Akhir
+20_metrik_test_sumatera_barat.csv,Metrik fokus Sumatera Barat,4.5 Fokus Sumatera Barat
+21_sensitivitas_outlier_test_akhir.csv,Sensitivitas tanpa target ekstrem,4.4 Evaluasi Test Akhir
+22_ablation_usd_idr_test_akhir.csv,Ablation USD/IDR,4.4 Evaluasi Test Akhir
+23_shap_global_importance_champion.csv,Kepentingan global SHAP,4.6 Interpretasi SHAP
+24_shap_importance_per_kelompok.csv,SHAP per kelompok fitur,4.6 Interpretasi SHAP

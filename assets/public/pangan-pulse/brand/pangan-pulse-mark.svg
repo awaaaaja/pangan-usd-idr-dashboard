@@ -1,0 +1,7 @@
+<svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+<title id="title">Pangan Pulse mark</title><desc id="desc">A stylized P formed by research nodes and a pulse line.</desc>
+<rect width="112" height="112" rx="28" fill="#101B33"/>
+<path d="M33 80V32H56.4C71.5 32 80 40.5 80 53.6C80 66.7 71.4 75.2 56.4 75.2H45.5" stroke="#F7F0E4" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M45 58H56L61 49L67 65L72 56H79" stroke="#92D6B8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="31" cy="32" r="4" fill="#D4513E"/><circle cx="81" cy="80" r="4" fill="#7256C8"/>
+</svg>

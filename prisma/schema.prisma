@@ -1,0 +1,480 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean   @default(false) @map("email_verified")
+  image         String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+  phoneNumber   Int?      @map("phone_number")
+  bio           String?
+  sessions      Session[]
+  accounts      Account[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime @map("expires_at")
+  token     String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  ipAddress String?  @map("ip_address")
+  userAgent String?  @map("user_agent")
+  userId    String   @map("user_id")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "session_userId_idx")
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String    @map("account_id")
+  providerId            String    @map("provider_id")
+  userId                String    @map("user_id")
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?   @map("access_token")
+  refreshToken          String?   @map("refresh_token")
+  idToken               String?   @map("id_token")
+  accessTokenExpiresAt  DateTime? @map("access_token_expires_at")
+  refreshTokenExpiresAt DateTime? @map("refresh_token_expires_at")
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @updatedAt @map("updated_at")
+
+  @@index([userId], map: "account_userId_idx")
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime @map("expires_at")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@index([identifier], map: "verification_identifier_idx")
+  @@map("verification")
+}
+
+model ResearchRun {
+  id                       String   @id
+  title                    String
+  executedAt               DateTime @map("executed_at")
+  randomState              Int      @map("random_state")
+  datasetObservations      Int      @map("dataset_observations")
+  datasetStart             DateTime @map("dataset_start") @db.Date
+  datasetEnd               DateTime @map("dataset_end") @db.Date
+  finalTrainEnd            DateTime @map("final_train_end") @db.Date
+  finalEmbargoMonth        DateTime @map("final_embargo_month") @db.Date
+  finalTestStart           DateTime @map("final_test_start") @db.Date
+  finalTestEnd             DateTime @map("final_test_end") @db.Date
+  testObservations         Int      @map("test_observations")
+  championModelFamily      String   @map("champion_model_family")
+  championConfigName       String   @map("champion_config_name")
+  championIncludeUsdIdr    Boolean  @map("champion_include_usd_idr")
+  targetEvaluation         String   @map("target_evaluation")
+  targetTraining           String   @map("target_training")
+  targetTransformation     String   @map("target_transformation")
+  sourceMetadataFile       String   @map("source_metadata_file")
+  sourceDocumentationFile  String   @map("source_documentation_file")
+  createdAt                DateTime @default(now()) @map("created_at")
+  updatedAt                DateTime @updatedAt @map("updated_at")
+
+  artifacts                ResearchArtifact[]
+  csvRows                  ArtifactCsvRow[]
+  splitRegistry            SplitRegistry[]
+  validationMetrics        ValidationMetric[]
+  validationLeaderboard    ValidationLeaderboard[]
+  testMetrics              TestMetric[]
+  metricsByPriceLevel      MetricsByPriceLevel[]
+  metricsByCommodity       MetricsByCommodity[]
+  metricsSumateraBarat     MetricsSumateraBarat[]
+  usdIdrAblationMetrics    UsdIdrAblationMetric[]
+  outlierSummary           OutlierSummary[]
+  outlierDetail            OutlierDetail[]
+  outlierSensitivity       OutlierSensitivity[]
+  shapGlobalImportance     ShapGlobalImportance[]
+  shapGroupImportance      ShapGroupImportance[]
+  shapLocalObservation     ShapLocalObservation[]
+
+  @@map("research_runs")
+}
+
+model ResearchArtifact {
+  id             String      @id @default(cuid())
+  researchRunId  String      @map("research_run_id")
+  artifactKey    String      @map("artifact_key")
+  artifactType   String      @map("artifact_type")
+  sourceFile     String      @map("source_file")
+  title          String?
+  description    String?
+  rowCount       Int?        @map("row_count")
+  sha256         String?
+  importedAt     DateTime    @default(now()) @map("imported_at")
+  researchRun    ResearchRun @relation(fields: [researchRunId], references: [id], onDelete: Cascade)
+
+  @@unique([researchRunId, artifactKey, sourceFile], map: "research_artifacts_run_key_file_key")
+  @@index([researchRunId], map: "research_artifacts_run_idx")
+  @@map("research_artifacts")
+}
+
+model ArtifactCsvRow {
+  id             String      @id @default(cuid())
+  researchRunId  String      @map("research_run_id")
+  artifactKey    String      @map("artifact_key")
+  sourceFile     String      @map("source_file")
+  rowIndex       Int         @map("row_index")
+  payload        Json
+  importedAt     DateTime    @default(now()) @map("imported_at")
+  researchRun    ResearchRun @relation(fields: [researchRunId], references: [id], onDelete: Cascade)
+
+  @@unique([researchRunId, artifactKey, rowIndex], map: "artifact_csv_rows_run_key_row_key")
+  @@index([researchRunId, artifactKey], map: "artifact_csv_rows_run_artifact_idx")
+  @@map("artifact_csv_rows")
+}
+
+model SplitRegistry {
+  id                 String      @id @default(cuid())
+  researchRunId      String      @map("research_run_id")
+  sourceFile         String      @map("source_file")
+  rowIndex           Int         @map("row_index")
+  jenis              String
+  fold               String
+  trainMulai         DateTime    @map("train_mulai") @db.Date
+  trainAkhir         DateTime    @map("train_akhir") @db.Date
+  embargoMulai       DateTime    @map("embargo_mulai") @db.Date
+  embargoAkhir       DateTime    @map("embargo_akhir") @db.Date
+  validasiMulai      DateTime?   @map("validasi_mulai") @db.Date
+  validasiAkhir      DateTime?   @map("validasi_akhir") @db.Date
+  testMulai          DateTime?   @map("test_mulai") @db.Date
+  testAkhir          DateTime?   @map("test_akhir") @db.Date
+  trainObservasi     Int         @map("train_observasi")
+  embargoObservasi   Int         @map("embargo_observasi")
+  validasiObservasi  Int         @map("validasi_observasi")
+  testObservasi      Int         @map("test_observasi")
+  researchRun        ResearchRun @relation(fields: [researchRunId], references: [id], onDelete: Cascade)
+
+  @@unique([researchRunId, sourceFile, rowIndex], map: "split_registry_run_file_row_key")
+  @@index([researchRunId, jenis], map: "split_registry_run_jenis_idx")
+  @@map("split_registry")
+}
+
+model ValidationMetric {
+  id                       String      @id @default(cuid())
+  researchRunId            String      @map("research_run_id")
+  sourceFile               String      @map("source_file")
+  rowIndex                 Int         @map("row_index")
+  fold                     Int
+  experiment               String
+  modelFamily              String      @map("model_family")
+  configName               String      @map("config_name")
+  includeUsdIdr            Boolean     @map("include_usd_idr")
+  n                        Int
+  mae                      Float
+  rmse                     Float
+  r2                       Float
+  smapePct                 Float       @map("smape_pct")
+  medianAbsoluteError      Float       @map("median_absolute_error")
+  bias                     Float
+  directionalAccuracyPct   Float?      @map("directional_accuracy_pct")
+  directionalN             Int         @map("directional_n")
+  researchRun              ResearchRun @relation(fields: [researchRunId], references: [id], onDelete: Cascade)
+
+  @@unique([researchRunId, sourceFile, rowIndex], map: "validation_metrics_run_file_row_key")
+  @@index([researchRunId, fold], map: "validation_metrics_run_fold_idx")
+  @@map("validation_metrics")
+}
+
+model ValidationLeaderboard {
+  id                            String      @id @default(cuid())
+  researchRunId                 String      @map("research_run_id")
+  sourceFile                    String      @map("source_file")
+  rowIndex                      Int         @map("row_index")
+  experiment                    String
+  modelFamily                   String      @map("model_family")
+  configName                    String      @map("config_name")
+  includeUsdIdr                 Boolean     @map("include_usd_idr")
+  foldTercakup                  Int         @map("fold_tercakup")
+  meanMae                       Float       @map("mean_mae")
+  stdMae                        Float       @map("std_mae")
+  meanRmse                      Float       @map("mean_rmse")
+  meanR2                        Float       @map("mean_r2")
+  meanSmapePct                  Float       @map("mean_smape_pct")
+  meanMedianAbsoluteError       Float       @map("mean_median_absolute_error")
+  meanBias                      Float       @map("mean_bias")
+  meanDirectionalAccuracyPct    Float?      @map("mean_directional_accuracy_pct")
+  selectedFromValidation        Boolean     @default(false) @map("selected_from_validation")
+  researchRun                   ResearchRun @relation(fields: [researchRunId], references: [id], onDelete: Cascade)
+
+  @@unique([researchRunId, sourceFile, rowIndex], map: "validation_leaderboard_run_file_row_key")
+  @@index([researchRunId, meanMae], map: "validation_leaderboard_run_mae_idx")
+  @@map("validation_leaderboard")
+}
+
+model TestMetric {
+  id                       String      @id @default(cuid())
+  researchRunId            String      @map("research_run_id")
+  sourceFile               String      @map("source_file")
+  rowIndex                 Int         @map("row_index")
+  experiment               String
+  modelFamily              String      @map("model_family")
+  configName               String      @map("config_name")
+  includeUsdIdr            Boolean     @map("include_usd_idr")
+  selectedFromValidation   Boolean     @map("selected_from_validation")
+  n                        Int
+  mae                      Float
+  rmse                     Float
+  r2                       Float
+  smapePct                 Float       @map("smape_pct")
+  medianAbsoluteError      Float       @map("median_absolute_error")
+  bias                     Float
+  directionalAccuracyPct   Float?      @map("directional_accuracy_pct")
+  directionalN             Int         @map("directional_n")
+  isChampionMl             Boolean     @default(false) @map("is_champion_ml")
+  researchRun              ResearchRun @relation(fields: [researchRunId], references: [id], onDelete: Cascade)
+
+  @@unique([researchRunId, sourceFile, rowIndex], map: "test_metrics_run_file_row_key")
+  @@index([researchRunId, mae], map: "test_metrics_run_mae_idx")
+  @@map("test_metrics")
+}
+
+model MetricsByPriceLevel {
+  id                       String      @id @default(cuid())
+  researchRunId            String      @map("research_run_id")
+  sourceFile               String      @map("source_file")
+  rowIndex                 Int         @map("row_index")
+  experiment               String
+  modelFamily              String      @map("model_family")
+  includeUsdIdr            Boolean     @map("include_usd_idr")
+  periodeMulai             DateTime    @map("periode_mulai") @db.Date
+  periodeAkhir             DateTime    @map("periode_akhir") @db.Date
+  n                        Int
+  mae                      Float
+  rmse                     Float
+  r2                       Float
+  smapePct                 Float       @map("smape_pct")
+  medianAbsoluteError      Float       @map("median_absolute_error")
+  bias                     Float
+  directionalAccuracyPct   Float?      @map("directional_accuracy_pct")
+  directionalN             Int         @map("directional_n")
+  levelHarga               String      @map("level_harga")
+  researchRun              ResearchRun @relation(fields: [researchRunId], references: [id], onDelete: Cascade)
+
+  @@unique([researchRunId, sourceFile, rowIndex], map: "metrics_price_level_run_file_row_key")
+  @@index([researchRunId, levelHarga], map: "metrics_price_level_run_level_idx")
+  @@map("metrics_by_price_level")
+}
+
+model MetricsByCommodity {
+  id                       String      @id @default(cuid())
+  researchRunId            String      @map("research_run_id")
+  sourceFile               String      @map("source_file")
+  rowIndex                 Int         @map("row_index")
+  experiment               String
+  modelFamily              String      @map("model_family")
+  includeUsdIdr            Boolean     @map("include_usd_idr")
+  periodeMulai             DateTime    @map("periode_mulai") @db.Date
+  periodeAkhir             DateTime    @map("periode_akhir") @db.Date
+  n                        Int
+  mae                      Float
+  rmse                     Float
+  r2                       Float
+  smapePct                 Float       @map("smape_pct")
+  medianAbsoluteError      Float       @map("median_absolute_error")
+  bias                     Float
+  directionalAccuracyPct   Float?      @map("directional_accuracy_pct")
+  directionalN             Int         @map("directional_n")
+  komoditas                String
+  researchRun              ResearchRun @relation(fields: [researchRunId], references: [id], onDelete: Cascade)
+
+  @@unique([researchRunId, sourceFile, rowIndex], map: "metrics_commodity_run_file_row_key")
+  @@index([researchRunId, mae], map: "metrics_commodity_run_mae_idx")
+  @@map("metrics_by_commodity")
+}
+
+model MetricsSumateraBarat {
+  id                       String      @id @default(cuid())
+  researchRunId            String      @map("research_run_id")
+  sourceFile               String      @map("source_file")
+  rowIndex                 Int         @map("row_index")
+  experiment               String
+  modelFamily              String      @map("model_family")
+  includeUsdIdr            Boolean     @map("include_usd_idr")
+  periodeMulai             DateTime    @map("periode_mulai") @db.Date
+  periodeAkhir             DateTime    @map("periode_akhir") @db.Date
+  n                        Int
+  mae                      Float
+  rmse                     Float
+  r2                       Float
+  smapePct                 Float       @map("smape_pct")
+  medianAbsoluteError      Float       @map("median_absolute_error")
+  bias                     Float
+  directionalAccuracyPct   Float?      @map("directional_accuracy_pct")
+  directionalN             Int         @map("directional_n")
+  levelHarga               String      @map("level_harga")
+  researchRun              ResearchRun @relation(fields: [researchRunId], references: [id], onDelete: Cascade)
+
+  @@unique([researchRunId, sourceFile, rowIndex], map: "metrics_sumbar_run_file_row_key")
+  @@index([researchRunId, levelHarga], map: "metrics_sumbar_run_level_idx")
+  @@map("metrics_sumatera_barat")
+}
+
+model UsdIdrAblationMetric {
+  id                       String      @id @default(cuid())
+  researchRunId            String      @map("research_run_id")
+  sourceFile               String      @map("source_file")
+  rowIndex                 Int         @map("row_index")
+  experiment               String
+  modelFamily              String      @map("model_family")
+  configName               String      @map("config_name")
+  includeUsdIdr            Boolean     @map("include_usd_idr")
+  selectedFromValidation   Boolean     @map("selected_from_validation")
+  n                        Int
+  mae                      Float
+  rmse                     Float
+  r2                       Float
+  smapePct                 Float       @map("smape_pct")
+  medianAbsoluteError      Float       @map("median_absolute_error")
+  bias                     Float
+  directionalAccuracyPct   Float?      @map("directional_accuracy_pct")
+  directionalN             Int         @map("directional_n")
+  researchRun              ResearchRun @relation(fields: [researchRunId], references: [id], onDelete: Cascade)
+
+  @@unique([researchRunId, sourceFile, rowIndex], map: "usd_ablation_run_file_row_key")
+  @@index([researchRunId, includeUsdIdr], map: "usd_ablation_run_include_idx")
+  @@map("usd_idr_ablation_metrics")
+}
+
+model OutlierSummary {
+  id                    String      @id @default(cuid())
+  researchRunId         String      @map("research_run_id")
+  sourceFile            String      @map("source_file")
+  rowIndex              Int         @map("row_index")
+  indikator             String
+  jumlah                Int
+  persentaseDariSampel  Float       @map("persentase_dari_sampel")
+  researchRun           ResearchRun @relation(fields: [researchRunId], references: [id], onDelete: Cascade)
+
+  @@unique([researchRunId, sourceFile, rowIndex], map: "outlier_summary_run_file_row_key")
+  @@map("outlier_summary")
+}
+
+model OutlierDetail {
+  id                                String      @id @default(cuid())
+  researchRunId                     String      @map("research_run_id")
+  sourceFile                        String      @map("source_file")
+  rowIndex                          Int         @map("row_index")
+  tanggal                           DateTime    @db.Date
+  levelHarga                        String      @map("level_harga")
+  provinsi                          String
+  komoditas                         String
+  hargaRupiah                       Float       @map("harga_rupiah")
+  hargaBulanBerikutnya              Float       @map("harga_bulan_berikutnya")
+  perubahanHarga1BulanPct           Float       @map("perubahan_harga_1_bulan_pct")
+  targetPerubahanHarga1BulanPct     Float       @map("target_perubahan_harga_1_bulan_pct")
+  nRawRows                          Int         @map("n_raw_rows")
+  uniquePriceCount                  Int         @map("unique_price_count")
+  minPrice                          Float       @map("min_price")
+  maxPrice                          Float       @map("max_price")
+  flagChangeAbs100Pct               Boolean     @map("flag_change_abs_100pct")
+  flagTargetAbs100Pct               Boolean     @map("flag_target_abs_100pct")
+  flagChangeMad                     Boolean     @map("flag_change_mad")
+  flagTargetMad                     Boolean     @map("flag_target_mad")
+  flagSourceConflict                Boolean     @map("flag_source_conflict")
+  researchRun                       ResearchRun @relation(fields: [researchRunId], references: [id], onDelete: Cascade)
+
+  @@unique([researchRunId, sourceFile, rowIndex], map: "outlier_detail_run_file_row_key")
+  @@index([researchRunId, targetPerubahanHarga1BulanPct], map: "outlier_detail_run_target_idx")
+  @@map("outlier_detail")
+}
+
+model OutlierSensitivity {
+  id                       String      @id @default(cuid())
+  researchRunId            String      @map("research_run_id")
+  sourceFile               String      @map("source_file")
+  rowIndex                 Int         @map("row_index")
+  experiment               String
+  skenario                 String
+  n                        Int
+  mae                      Float
+  rmse                     Float
+  r2                       Float
+  smapePct                 Float       @map("smape_pct")
+  medianAbsoluteError      Float       @map("median_absolute_error")
+  bias                     Float
+  directionalAccuracyPct   Float?      @map("directional_accuracy_pct")
+  directionalN             Int         @map("directional_n")
+  researchRun              ResearchRun @relation(fields: [researchRunId], references: [id], onDelete: Cascade)
+
+  @@unique([researchRunId, sourceFile, rowIndex], map: "outlier_sensitivity_run_file_row_key")
+  @@index([researchRunId, skenario], map: "outlier_sensitivity_run_scenario_idx")
+  @@map("outlier_sensitivity")
+}
+
+model ShapGlobalImportance {
+  id              String      @id @default(cuid())
+  researchRunId   String      @map("research_run_id")
+  sourceFile      String      @map("source_file")
+  rowIndex        Int         @map("row_index")
+  feature         String
+  meanAbsShap     Float       @map("mean_abs_shap")
+  kelompokFitur   String      @map("kelompok_fitur")
+  researchRun     ResearchRun @relation(fields: [researchRunId], references: [id], onDelete: Cascade)
+
+  @@unique([researchRunId, sourceFile, rowIndex], map: "shap_global_run_file_row_key")
+  @@index([researchRunId, meanAbsShap], map: "shap_global_run_mean_idx")
+  @@map("shap_global_importance")
+}
+
+model ShapGroupImportance {
+  id              String      @id @default(cuid())
+  researchRunId   String      @map("research_run_id")
+  sourceFile      String      @map("source_file")
+  rowIndex        Int         @map("row_index")
+  kelompokFitur   String      @map("kelompok_fitur")
+  meanAbsShap     Float       @map("mean_abs_shap")
+  researchRun     ResearchRun @relation(fields: [researchRunId], references: [id], onDelete: Cascade)
+
+  @@unique([researchRunId, sourceFile, rowIndex], map: "shap_group_run_file_row_key")
+  @@map("shap_group_importance")
+}
+
+model ShapLocalObservation {
+  id                                String      @id @default(cuid())
+  researchRunId                     String      @map("research_run_id")
+  sourceFile                        String      @map("source_file")
+  rowIndex                          Int         @map("row_index")
+  levelHarga                        String      @map("level_harga")
+  kodeProvinsi                      String      @map("kode_provinsi")
+  provinsi                          String
+  komoditas                         String
+  tanggal                           DateTime    @db.Date
+  hargaRupiah                       Float       @map("harga_rupiah")
+  usdIdrRataRataBulanan             Float       @map("usd_idr_rata_rata_bulanan")
+  targetPerubahanHarga1BulanPct     Float       @map("target_perubahan_harga_1_bulan_pct")
+  prediksi                          Float
+  aktual                            Float
+  absoluteError                     Float       @map("absolute_error")
+  isSumateraBarat                   Boolean     @map("is_sumatera_barat")
+  payload                           Json
+  researchRun                       ResearchRun @relation(fields: [researchRunId], references: [id], onDelete: Cascade)
+
+  @@unique([researchRunId, sourceFile, rowIndex], map: "shap_local_run_file_row_key")
+  @@index([researchRunId, provinsi], map: "shap_local_run_provinsi_idx")
+  @@map("shap_local_observation")
+}

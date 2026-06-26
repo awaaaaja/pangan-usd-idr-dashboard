@@ -1,0 +1,2 @@
+experiment,model_family,config_name,include_usd_idr,selected_from_validation,n,mae,rmse,r2,smape_pct,median_absolute_error,bias,directional_accuracy_pct,directional_n
+Random Forest | tanpa USD/IDR | rf_regularized,Random Forest,rf_regularized,False,True,5340,5.538375675479792,12.308442449748899,-0.029416959043041757,148.52354649551054,1.501942548692592,-0.4818813778157854,56.620572078045086,5279

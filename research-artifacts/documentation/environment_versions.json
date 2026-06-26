@@ -1,0 +1,13 @@
+{
+  "executed_at_utc": "2026-06-26T08:58:12.872676+00:00",
+  "python": "3.12.13 (main, Mar  4 2026, 09:23:07) [GCC 11.4.0]",
+  "platform": "Linux-6.6.122+-x86_64-with-glibc2.35",
+  "numpy": "2.0.2",
+  "pandas": "2.2.2",
+  "scikit_learn": "1.6.1",
+  "xgboost": "2.1.4",
+  "shap": "0.46.0",
+  "matplotlib": "3.10.0",
+  "joblib": "1.4.2",
+  "random_state": 42
+}

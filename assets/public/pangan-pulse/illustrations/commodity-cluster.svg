@@ -1,0 +1,14 @@
+<svg viewBox="0 0 720 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+<title id="title">Commodity cluster illustration</title><desc id="desc">Minimal geometric illustration of chili, onion, and rice commodities.</desc>
+<rect x="1" y="1" width="718" height="418" rx="34" fill="#FFF9F1" stroke="#D8CEBA"/>
+<path d="M160 264C108 239 112 163 179 144C243 126 286 179 262 226C245 259 203 278 160 264Z" fill="#D4513E"/>
+<path d="M176 149C170 124 188 102 213 102C227 102 239 111 244 123" stroke="#2D7E67" stroke-width="15" stroke-linecap="round"/>
+<path d="M144 260C171 236 199 207 222 173" stroke="#F7F0E4" stroke-width="4" opacity=".7"/>
+<path d="M365 276C298 252 304 160 377 138C452 115 509 168 488 237C470 294 417 295 365 276Z" fill="#C98A62"/>
+<path d="M377 138C388 111 405 96 429 90" stroke="#2D7E67" stroke-width="13" stroke-linecap="round"/>
+<path d="M355 208C390 220 431 219 474 203" stroke="#F7F0E4" stroke-width="4" opacity=".7"/>
+<path d="M576 278C538 260 523 218 546 180C571 139 630 132 663 166C696 200 680 261 640 278C619 287 595 287 576 278Z" fill="#E8D9A9"/>
+<path d="M540 302C572 316 631 316 672 297" stroke="#2D7E67" stroke-width="8" stroke-linecap="round"/>
+<path d="M558 325C590 342 642 342 671 323" stroke="#2D7E67" stroke-width="8" stroke-linecap="round" opacity=".75"/>
+<circle cx="116" cy="86" r="7" fill="#7256C8"/><circle cx="605" cy="93" r="7" fill="#2D75B8"/><circle cx="686" cy="340" r="5" fill="#D4513E"/>
+</svg>

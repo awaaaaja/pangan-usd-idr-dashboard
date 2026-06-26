@@ -1,0 +1,14 @@
+<svg viewBox="0 0 1080 360" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+<title id="title">Walk forward validation with embargo</title><desc id="desc">Four expanding train windows, an embargo month, and final holdout test.</desc>
+<rect width="1080" height="360" rx="32" fill="#FFF9F1"/>
+<text x="56" y="58" fill="#101B33" font-family="Arial, sans-serif" font-size="26" font-weight="700">Expanding walk-forward validation + embargo satu bulan</text>
+<g font-family="Arial, sans-serif" font-size="15" fill="#1C273B"><text x="56" y="112">Fold 1</text><text x="56" y="162">Fold 2</text><text x="56" y="212">Fold 3</text><text x="56" y="262">Fold 4</text><text x="56" y="322">Test akhir</text></g>
+<g>
+<rect x="155" y="87" width="280" height="28" rx="14" fill="#2D7E67"/><rect x="444" y="87" width="42" height="28" rx="14" fill="#D4513E"/><rect x="495" y="87" width="142" height="28" rx="14" fill="#2D75B8"/>
+<rect x="155" y="137" width="402" height="28" rx="14" fill="#2D7E67"/><rect x="566" y="137" width="42" height="28" rx="14" fill="#D4513E"/><rect x="617" y="137" width="142" height="28" rx="14" fill="#2D75B8"/>
+<rect x="155" y="187" width="524" height="28" rx="14" fill="#2D7E67"/><rect x="688" y="187" width="42" height="28" rx="14" fill="#D4513E"/><rect x="739" y="187" width="142" height="28" rx="14" fill="#2D75B8"/>
+<rect x="155" y="237" width="646" height="28" rx="14" fill="#2D7E67"/><rect x="810" y="237" width="42" height="28" rx="14" fill="#D4513E"/><rect x="861" y="237" width="142" height="28" rx="14" fill="#2D75B8"/>
+<rect x="155" y="297" width="746" height="28" rx="14" fill="#2D7E67"/><rect x="910" y="297" width="42" height="28" rx="14" fill="#D4513E"/><rect x="961" y="297" width="82" height="28" rx="14" fill="#101B33"/>
+</g>
+<g font-family="Arial, sans-serif" font-size="13" fill="#1C273B"><text x="155" y="350">Masa lalu / train</text><text x="445" y="350">Embargo</text><text x="550" y="350">Validation</text><text x="930" y="350">Test akhir</text></g>
+</svg>

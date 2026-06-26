@@ -1,0 +1,9 @@
+<svg viewBox="0 0 1080 280" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+<title id="title">Methodology flow</title><desc id="desc">Flow from price data and USD IDR through features, models, validation, and explanation.</desc>
+<defs><filter id="s" x="0" y="0" width="1080" height="280"><feDropShadow dx="0" dy="9" stdDeviation="8" flood-color="#101B33" flood-opacity=".12"/></filter></defs>
+<g filter="url(#s)">
+<rect x="26" y="72" width="154" height="136" rx="24" fill="#101B33"/><rect x="224" y="72" width="154" height="136" rx="24" fill="#2D75B8"/><rect x="422" y="72" width="154" height="136" rx="24" fill="#2D7E67"/><rect x="620" y="72" width="154" height="136" rx="24" fill="#7256C8"/><rect x="818" y="72" width="236" height="136" rx="24" fill="#D4513E"/>
+</g>
+<g stroke="#D8CEBA" stroke-width="5" stroke-linecap="round"><path d="M181 140H222"/><path d="M379 140H420"/><path d="M577 140H618"/><path d="M775 140H816"/></g>
+<g fill="#F7F0E4" font-family="Arial, sans-serif" text-anchor="middle"><text x="103" y="125" font-size="18" font-weight="700">Data Harga</text><text x="103" y="153" font-size="14">Bapanas + Kurs</text><text x="301" y="125" font-size="18" font-weight="700">Feature</text><text x="301" y="153" font-size="14">Strict lag 1–3</text><text x="499" y="125" font-size="18" font-weight="700">Model</text><text x="499" y="153" font-size="14">Naïf · RF · XGB</text><text x="697" y="125" font-size="18" font-weight="700">Validasi</text><text x="697" y="153" font-size="14">Walk-forward</text><text x="936" y="125" font-size="18" font-weight="700">Interpretasi</text><text x="936" y="153" font-size="14">Test akhir + SHAP</text></g>
+</svg>

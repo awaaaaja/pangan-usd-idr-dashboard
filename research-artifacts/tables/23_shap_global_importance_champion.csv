@@ -1,0 +1,85 @@
+feature,mean_abs_shap,kelompok_fitur
+harga_lag_1,1.397096440151026,Riwayat harga/musiman
+bulan_cos,1.0987211440968796,Riwayat harga/musiman
+harga_rupiah,0.796508227546744,Riwayat harga/musiman
+harga_lag_3,0.6633547960697156,Riwayat harga/musiman
+perubahan_harga_1_bulan_pct,0.6477262273559242,Riwayat harga/musiman
+std_harga_3_bulan_lalu,0.46702583342464116,Riwayat harga/musiman
+harga_lag_2,0.3875637367782314,Riwayat harga/musiman
+bulan_sin,0.3258427649098863,Riwayat harga/musiman
+komoditas_Cabai Rawit Merah,0.3038726781051674,Komoditas
+bulan_num,0.2631062893525648,Riwayat harga/musiman
+tahun,0.22831843022506174,Riwayat harga/musiman
+komoditas_Bawang Merah,0.22206185615676405,Komoditas
+komoditas_Cabai Merah Keriting,0.19450648448236954,Komoditas
+komoditas_Cabai Rawit Merah Tingkat Petani,0.1087116320757832,Komoditas
+komoditas_Bawang Merah Tingkat Petani,0.06749410599330488,Komoditas
+komoditas_Cabai Merah Keriting Tingkat Petani,0.06158536522401017,Komoditas
+rata_rata_harga_3_bulan_lalu,0.05376388034937684,Riwayat harga/musiman
+komoditas_Jagung Tingkat Peternak,0.05027968863406595,Komoditas
+komoditas_Bawang Putih (Bonggol),0.03730624993462939,Komoditas
+komoditas_Kedelai Biji Kering Tingkat Petani,0.02640373046124264,Komoditas
+level_harga_produsen,0.02488170117105669,Level harga
+provinsi_Papua Tengah,0.02022728377211555,Provinsi
+level_harga_konsumen,0.019633043962656565,Level harga
+komoditas_Jagung Pipilan Kering Tingkat Petani,0.014355756776443917,Komoditas
+komoditas_GKP Tk. Penggilingan,0.008048357096597378,Komoditas
+komoditas_Minyak Goreng Kemasan,0.0040074761136779345,Komoditas
+provinsi_Sulawesi Selatan,0.004004401204943194,Provinsi
+komoditas_Daging Sapi Murni,0.003402097477057815,Komoditas
+provinsi_Papua Pegunungan,0.0027934397424625597,Provinsi
+komoditas_Kedelai Biji Kering,0.002623225719819511,Komoditas
+provinsi_Papua Selatan,0.002620534480358178,Provinsi
+provinsi_Sulawesi Utara,0.0024287167277917453,Provinsi
+provinsi_Sulawesi Barat,0.00235098687257263,Provinsi
+provinsi_Sumatera Utara,0.002291700733035556,Provinsi
+provinsi_D.I Yogyakarta,0.002086860349494157,Provinsi
+provinsi_Gorontalo,0.002069897589245682,Provinsi
+provinsi_Jawa Timur,0.0017611220125449303,Provinsi
+komoditas_Sapi Hidup (Tingkat Peternak/RPH),0.0014412430596091265,Komoditas
+provinsi_Papua Barat,0.0013809921995246895,Provinsi
+komoditas_Telur Ayam Ras,0.0013326003331917944,Komoditas
+provinsi_Nusa Tenggara Barat,0.0011034959082292547,Provinsi
+provinsi_Aceh,0.0010391313802121202,Provinsi
+provinsi_Sumatera Barat,0.001029833225500982,Provinsi
+provinsi_Maluku Utara,0.000978220156164187,Provinsi
+provinsi_Nusa Tenggara Timur,0.0007388825570850305,Provinsi
+provinsi_Kalimantan Barat,0.0007180400136620415,Provinsi
+provinsi_Papua,0.0007064996731551476,Provinsi
+provinsi_Riau,0.0006953312303642268,Provinsi
+provinsi_Bali,0.0006895732102527839,Provinsi
+provinsi_Kalimantan Selatan,0.0006860887771079753,Provinsi
+provinsi_Kalimantan Utara,0.0006651756326449206,Provinsi
+provinsi_Jambi,0.0006473467170045535,Provinsi
+komoditas_Beras Premium,0.0006192644048867833,Komoditas
+provinsi_Jawa Tengah,0.0006131405713190069,Provinsi
+komoditas_Minyak Goreng Curah,0.0005877722823151392,Komoditas
+provinsi_Sulawesi Tengah,0.0005412867604685693,Provinsi
+provinsi_Kepulauan Bangka Belitung,0.0005186369022564941,Provinsi
+provinsi_Kalimantan Tengah,0.000500220825587907,Provinsi
+provinsi_Banten,0.0004846120239068726,Provinsi
+provinsi_Lampung,0.00044416566860059465,Provinsi
+provinsi_Kalimantan Timur,0.0004365889466568742,Provinsi
+komoditas_Beras Premium Tingkat Penggilingan,0.0004259739990968606,Komoditas
+provinsi_Sumatera Selatan,0.0004039140186539132,Provinsi
+provinsi_DKI Jakarta,0.0003937320355588862,Provinsi
+komoditas_Daging Ayam Ras,0.0003921432754324182,Komoditas
+provinsi_Kepulauan Riau,0.00035720858989540235,Provinsi
+provinsi_Maluku,0.0003508227686614875,Provinsi
+provinsi_Bengkulu,0.0003331652366540764,Provinsi
+provinsi_Jawa Barat,0.00032367760693210903,Provinsi
+komoditas_GKP Tk. Petani,0.00032336416708297243,Komoditas
+provinsi_Sulawesi Tenggara,0.00022126474474300206,Provinsi
+komoditas_Beras Medium Tingkat Penggilingan,0.000142684744746835,Komoditas
+komoditas_Gula Pasir Lokal/Curah,0.00013503825843229879,Komoditas
+komoditas_Tepung Terigu Kemasan,7.003254788629975e-05,Komoditas
+provinsi_Papua Barat Daya,5.523984184523478e-05,Provinsi
+komoditas_GKG Tk. Penggilingan,3.674551151736975e-05,Komoditas
+komoditas_Beras Medium,1.1085528232804574e-05,Komoditas
+komoditas_Ikan Bandeng,1.5246176574941454e-06,Komoditas
+komoditas_Ayam Ras Pedaging,0.0,Komoditas
+komoditas_Beras SPHP,0.0,Komoditas
+komoditas_Ikan Kembung,0.0,Komoditas
+komoditas_Ikan Tongkol,0.0,Komoditas
+komoditas_Garam Konsumsi,0.0,Komoditas
+komoditas_Tepung Terigu Curah,0.0,Komoditas

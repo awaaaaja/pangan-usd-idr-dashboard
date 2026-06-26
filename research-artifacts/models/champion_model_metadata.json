@@ -1,0 +1,47 @@
+{
+  "feature_columns": [
+    "harga_rupiah",
+    "harga_lag_1",
+    "harga_lag_2",
+    "harga_lag_3",
+    "perubahan_harga_1_bulan_pct",
+    "rata_rata_harga_3_bulan_lalu",
+    "std_harga_3_bulan_lalu",
+    "tahun",
+    "bulan_num",
+    "bulan_sin",
+    "bulan_cos",
+    "level_harga",
+    "provinsi",
+    "komoditas"
+  ],
+  "include_usd_idr": false,
+  "model_family": "Random Forest",
+  "config_name": "rf_regularized",
+  "params": {
+    "n_estimators": 180,
+    "max_depth": 12,
+    "min_samples_leaf": 3,
+    "max_features": 0.8,
+    "bootstrap": true
+  },
+  "target_evaluasi": "target_perubahan_harga_1_bulan_pct",
+  "target_pelatihan": "target_log_return_1_bulan_pct",
+  "transformasi_target": "100 * ln(harga_(t+1) / harga_t); prediksi dikonversi kembali ke persen",
+  "train_end": "2024-11-01",
+  "embargo_month": "2024-12-01",
+  "test_start": "2025-01-01",
+  "environment": {
+    "executed_at_utc": "2026-06-26T08:58:12.872676+00:00",
+    "python": "3.12.13 (main, Mar  4 2026, 09:23:07) [GCC 11.4.0]",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.35",
+    "numpy": "2.0.2",
+    "pandas": "2.2.2",
+    "scikit_learn": "1.6.1",
+    "xgboost": "2.1.4",
+    "shap": "0.46.0",
+    "matplotlib": "3.10.0",
+    "joblib": "1.4.2",
+    "random_state": 42
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "strict_lag_n": 25850,
+  "strict_lag_period": "April 2022–Desember 2025",
+  "folds": 4,
+  "embargo": "Desember 2024",
+  "final_test": "Januari–Desember 2025",
+  "champion": "Random Forest tanpa USD/IDR (rf_regularized)",
+  "champion_val_mae": 6.07866,
+  "champion_test_mae": 5.538376,
+  "baseline_test_mae": 5.271087,
+  "xgb_usd_test_mae": 5.337615,
+  "outlier_pct": 6.2708,
+  "target_extreme_pct": 3.5706,
+  "shap_history_seasonality": 6.329028,
+  "shap_commodity": 1.110178,
+  "shap_province": 0.059691,
+  "shap_level": 0.044515,
+  "sumbar_consumer_baseline": 3.397763,
+  "sumbar_consumer_rf": 3.917291,
+  "sumbar_producer_baseline": 5.626667,
+  "sumbar_producer_rf": 5.607687
+}

@@ -1,0 +1,20 @@
+<svg viewBox="0 0 960 640" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+<title id="title">Archipelago data signal illustration</title><desc id="desc">Abstract Indonesian archipelago made from data nodes and flowing price signals.</desc>
+<defs>
+ <linearGradient id="wave" x1="90" y1="80" x2="850" y2="580" gradientUnits="userSpaceOnUse"><stop stop-color="#4EA9DC"/><stop offset="0.5" stop-color="#92D6B8"/><stop offset="1" stop-color="#D4513E"/></linearGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="24"/></filter>
+</defs>
+<circle cx="440" cy="310" r="230" fill="#1C2A48"/>
+<circle cx="550" cy="300" r="148" fill="#7256C8" opacity=".18" filter="url(#blur)"/>
+<path d="M90 330C170 240 246 402 334 310C412 230 465 268 532 327C606 392 683 242 858 315" stroke="url(#wave)" stroke-width="10" stroke-linecap="round" opacity=".95"/>
+<path d="M110 395C220 340 276 490 381 418C482 349 606 474 845 390" stroke="#F7F0E4" stroke-width="2" stroke-dasharray="10 12" opacity=".45"/>
+<g fill="#F7F0E4">
+<ellipse cx="190" cy="310" rx="64" ry="18" transform="rotate(-20 190 310)"/><ellipse cx="305" cy="348" rx="46" ry="15" transform="rotate(18 305 348)"/><ellipse cx="432" cy="322" rx="88" ry="29" transform="rotate(-9 432 322)"/><ellipse cx="570" cy="366" rx="46" ry="18" transform="rotate(22 570 366)"/><ellipse cx="694" cy="320" rx="77" ry="20" transform="rotate(-14 694 320)"/><ellipse cx="802" cy="351" rx="47" ry="26" transform="rotate(10 802 351)"/>
+</g>
+<g fill="#101B33" opacity=".9">
+<circle cx="177" cy="307" r="6"/><circle cx="215" cy="303" r="4"/><circle cx="294" cy="343" r="5"/><circle cx="326" cy="351" r="4"/><circle cx="400" cy="316" r="5"/><circle cx="438" cy="323" r="7"/><circle cx="478" cy="314" r="4"/><circle cx="555" cy="361" r="6"/><circle cx="592" cy="374" r="4"/><circle cx="670" cy="323" r="5"/><circle cx="719" cy="313" r="7"/><circle cx="781" cy="347" r="5"/><circle cx="822" cy="359" r="4"/>
+</g>
+<g fill="#92D6B8"><circle cx="147" cy="245" r="8"/><circle cx="364" cy="212" r="7"/><circle cx="622" cy="233" r="8"/><circle cx="785" cy="253" r="7"/></g>
+<g stroke="#92D6B8" stroke-width="2" opacity=".65"><path d="M147 245L190 310"/><path d="M364 212L432 322"/><path d="M622 233L570 366"/><path d="M785 253L802 351"/></g>
+<g fill="#F7F0E4"><circle cx="123" cy="508" r="3"/><circle cx="160" cy="532" r="5"/><circle cx="210" cy="502" r="3"/><circle cx="750" cy="490" r="4"/><circle cx="816" cy="524" r="3"/><circle cx="860" cy="474" r="5"/></g>
+</svg>

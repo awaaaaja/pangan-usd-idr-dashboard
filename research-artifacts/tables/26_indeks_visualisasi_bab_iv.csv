@@ -1,0 +1,16 @@
+file,section_bab_iv,caption
+01_cakupan_observasi_strict_lag.png,4.1 Deskripsi Data,Cakupan observasi strict-lag per bulan dan level harga.
+02_distribusi_target_perubahan_harga.png,4.1 Deskripsi Data,Distribusi target perubahan harga satu bulan berikutnya pada sampel strict-lag.
+03_top_outlier_target_audit.png,4.2 Audit Kualitas Data,Dua puluh observasi target ekstrem/anomali teratas yang perlu ditelusuri ke sumber data.
+04_mae_walk_forward_per_fold.png,4.3 Validasi Model,Perbandingan MAE kandidat model pada setiap fold walk-forward.
+05_leaderboard_walk_forward_mae.png,4.3 Validasi Model,Sepuluh eksperimen terbaik menurut MAE rata-rata validasi walk-forward.
+06_ablation_usd_idr_test_akhir.png,4.4 Evaluasi Test Akhir,Perbandingan kinerja model dengan dan tanpa fitur USD/IDR pada test akhir.
+07_aktual_vs_prediksi_agregat_bulanan.png,4.4 Evaluasi Test Akhir,Perbandingan rata-rata target aktual dan prediksi champion per bulan pada test akhir.
+08_scatter_aktual_vs_prediksi_champion.png,4.4 Evaluasi Test Akhir,Hubungan prediksi champion dengan realisasi perubahan harga pada test akhir.
+09_distribusi_residual_champion.png,4.4 Evaluasi Test Akhir,Distribusi residual model champion pada test akhir.
+10_mae_per_level_harga.png,4.4 Evaluasi Test Akhir,Perbandingan MAE champion dan baseline menurut level harga.
+11_komoditas_error_tertinggi.png,4.4 Evaluasi Test Akhir,Lima belas komoditas dengan kesalahan prediksi tertinggi pada test akhir.
+12_backtesting_sumatera_barat.png,4.5 Fokus Sumatera Barat,Backtesting rata-rata perubahan harga aktual dan prediksi champion untuk Sumatera Barat.
+13_shap_global_importance_champion.png,4.6 Interpretasi SHAP,Dua puluh fitur dengan kontribusi absolut SHAP tertinggi pada model champion.
+14_shap_beeswarm_champion.png,4.6 Interpretasi SHAP,Distribusi arah dan besar kontribusi SHAP pada sampel test akhir.
+15_shap_lokal_observasi_sumatera_barat.png,4.6 Interpretasi SHAP,Interpretasi SHAP lokal pada observasi representatif Sumatera Barat/observasi median-error.
