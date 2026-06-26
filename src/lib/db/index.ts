@@ -11,7 +11,10 @@ const connectionString =
   process.env.DATABASE_URL ??
   "postgresql://placeholder:placeholder@localhost:5432/placeholder";
 
-const pool = new Pool({ connectionString });
+const pool = new Pool({
+  connectionString,
+  ssl: connectionString.includes('localhost') ? false : { rejectUnauthorized: false }
+});
 
 export const db =
   globalThis.prisma ??
